@@ -1,0 +1,196 @@
+<div class="container">
+
+  <!-- Outer Row -->
+  <div class="row justify-content-center py-3">
+
+
+    <div class="card o-hidden border-0 shadow-lg">
+      <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+          <div class="container">
+            <div class="text-center">
+              <h1 class="h4 text-gray-900 mb-4">User Information</h1>
+            </div>
+            <div class='my2'></div>
+
+            <div class='my2'></div>
+            <div class='container'>
+              <div class="col-md-12">
+                <div class="button-e">
+                  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"
+                    (click)="switchToCreate()">Add</button>
+                  <button style="margin-left:10px;" type="button" class="btn btn-info btn-lg" data-toggle="modal"
+                    data-target="#testdbModal" >Testing Data</button>
+
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="testdbModal" role="dialog">
+                    <div class="modal-dialog">
+
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Data</h4>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                          <form [formGroup]='testingForm'>
+                            Email
+                            <input  name="email" formControlName='email' class='form-control' />
+                            <div *ngIf="testingForm.get('email').touched && testingForm.get('email').errors.required  " class='error' >email is required</div>
+                            <div *ngIf="testingForm.get('email').touched && testingForm.get('email').errors.email" class='error' >email is fail</div>
+                            Name  
+                            <input  name='name' formControlName='name' class='form-control' />
+                            <div *ngIf="testingForm.get('name').touched && testingForm.get('name').errors.required" class='error'>Name is required</div>
+                            <button type="submit" [disabled]='!testingForm.valid' >Click</button>
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                </div>
+                <span class="col-md-12 text-center" *ngIf='notificaiton != null' [(ngModel)]="notificaiton"></span>
+                <table class="table table-bordered table-hover table-responsivegit">
+                  <thead>
+                    <tr>
+                      <!-- <th scope="col">Id</th> -->
+                      <th scope="col">Name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Phone number</th>
+                      <th scope="col">Address</th>
+                      <th scope="col">City</th>
+                      <th scope="col">Avatar</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Created at</th>
+                      <th scope="col">Updated at</th>
+                      <th scope="col">Option</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let user of User">
+                      <!-- <td>{{user.id}}</td> -->
+                      <td>{{user.name}}</td>
+                      <td>{{user.email}}</td>
+                      <td>{{user.phone}}</td>
+                      <td>{{user.address}}</td>
+                      <td>{{user.city}}</td>
+                      <td> <img src="../assets/images/{{user.avatar}}" width="50px" height="50px"></td>
+                      <td>{{user.status_id === 1?'On':'Off'}}</td>
+                      <td>{{user.created_at | date :'dd/MM/yyyy'}}</td>
+                      <td>{{user.updated_at | date :'dd/MM/yyyy'}}</td>
+                      <td>
+                        <!-- <span class="edit" routerLink="/Product-edit/{{Product.id}}">Edit</span> -->
+                        <!-- <button type="button" class="edit btn btn-primary" data-toggle="modal" data-target="#myModal"
+                          (click)="switch_to_update(user.id)">Edit</button> -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
+                          (click)="switchToUpdate(user)">
+                          Edit
+                        </button>
+                        <!-- <span class="delete" (click)="deleteProduct(Product.id)">Delete</span> -->
+                        <!-- <button type="button" class="delete btn btn-danger" (click)="deleteProduct(Product.id)">Delete</button> -->
+
+                        <!-- Modal -->
+
+                        <div id="myModal" class="modal fade" role="dialog">
+                          <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <!-- <h4 class="modal-title">Modal Header</h4> -->
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                              </div>
+                              <div class="modal-body">
+                                <div class="container custom-container">
+                                  <div class="col-md-12">
+                                    <h3 class="mb-3 text-center">User</h3>
+                                    <div class="form-group">
+                                      <span>Name </span>
+                                      <input type="text" [(ngModel)]="user_data.name" class="form-control"
+                                        placeholder="Name">
+                                      <span style="color:red">{{err.name}}</span>
+                                    </div>
+                                    <div class="form-group">
+                                      <span>Email </span>
+                                      <input type="text" [(ngModel)]="user_data.email" class="form-control"
+                                        placeholder="Email">
+                                      <span style="color:red">{{err.email}}</span>
+                                    </div>
+                                    <div class="form-group">
+                                      <span>Phone </span>
+                                      <input type="text" [(ngModel)]="user_data.phone" class="form-control"
+                                        placeholder="Phone">
+                                      <span style="color:red">{{err.phone}}</span>
+
+                                    </div>
+                                    <div class="form-group">
+                                      <span>Address </span>
+                                      <textarea [(ngModel)]="user_data.address" class="form-control"
+                                        placeholder="Address"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                      <span>City </span>
+                                      <input type="text" [(ngModel)]="user_data.city" class="form-control"
+                                        placeholder="City">
+                                    </div>
+                                    <div class="form-group">
+                                      <span>Avatar </span>
+                                      <input type="text" [(ngModel)]="user_data.avatar" class="form-control"
+                                        placeholder="Avatar">
+                                      <!-- <input type="file" [(ngModel)]="user_data.avatar" > -->
+                                    </div>
+                                    <div class="form-group">
+                                      <span>Status </span>
+                                      <select [(ngModel)]="user_data.status_id" class="form-control">
+                                        <option [ngValue]="1" selected>On</option>
+                                        <option [ngValue]="8">Off</option>
+                                      </select>
+                                    </div>
+                                    <div class="form-group">
+                                      <button class="btn btn-success btn-lg btn-block"
+                                        *ngIf="add_or_update === 'create' " (click)="updateOrCreateUser()">Create
+                                        User</button>
+
+                                      <button class="btn btn-success btn-lg btn-block"
+                                        *ngIf="add_or_update === 'update' " (click)="updateOrCreateUser()">Update
+                                        User</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- end modal -->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination">
+                    <li class="page-item"><a class="page-link" (click)="previousPage()">Previous</a></li>
+                    <li class="page-item" *ngFor="let i of array_total_page" (click)="currentPage(i)"><a
+                        class="page-link">{{i+1}}</a></li>
+                    <li class="page-item"><a class="page-link" (click)="nextPage()">Next</a></li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

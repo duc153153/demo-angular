@@ -1,0 +1,28 @@
+.container {
+    max-width: 1400px;
+    font-size: 12px;
+}
+
+.edit {
+    margin-right:5px;
+}
+
+table {
+    text-align: center;
+    background-color: ghostwhite;
+}
+table{
+    font-family:'Calibri';
+    font-size:15px;
+    background-color:#fff;
+    color:#333;
+}
+.modal-header{
+    background-color:#333;
+    color:#fff;
+}
+
+.page-item {
+    cursor:pointer;
+}
+
